@@ -115,8 +115,58 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-export PATH="~/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+
+PATH=$PATH:/home/sam/.local/bin
 
 eval "$(oh-my-posh init bash --config ~/dotfiles/.ohmyposhtheme.json)"
+eval "$(uv generate-shell-completion bash)"
+alias pip='uv pip'
+
+
+# Function to find the nearest .python-version file in the current or parent directories
+function find_python_version_file() {
+    local dir="$PWD"
+    while [ "$dir" != "/" ]; do
+        if [ -f "$dir/.python-version" ]; then
+            echo "$dir/.python-version"
+            return
+        fi
+        dir="$(dirname "$dir")"
+    done
+}
+
+# Auto-activate virtualenv based on .python-version file
+# Function to auto-activate virtualenv based on .python-version
+function auto_activate_virtualenv() {
+    local python_version_file
+    python_version_file="$(find_python_version_file)"
+    if [ -n "$python_version_file" ]; then
+        local py_version envdir base_dir
+        py_version="$(cat "$python_version_file")"
+        envdir="$py_version"
+        # Convert envdir to an absolute path if it's not already
+        if [[ "$envdir" != /* ]]; then
+            base_dir="$(dirname "$python_version_file")"
+            envdir="$base_dir/$envdir"
+        fi
+        # Activate the virtualenv if it's not already active
+        if [ "$VIRTUAL_ENV" != "$envdir" ]; then
+            if [ -n "$VIRTUAL_ENV" ]; then
+                deactivate
+            fi
+            if [ -d "$envdir" ]; then
+                source "$envdir/bin/activate"
+                uv pip sync "$(dirname "$python_version_file")/requirements-dev.txt"
+            else
+                echo "Virtualenv directory '$envdir' does not exist."
+            fi
+        fi
+    else
+        # Deactivate any active virtualenv if we leave the project directory
+        if [ -n "$VIRTUAL_ENV" ]; then
+            deactivate
+        fi
+    fi
+}
+# Set the PROMPT_COMMAND to auto-activate the virtualenv before each prompt
+PROMPT_COMMAND=auto_activate_virtualenv
