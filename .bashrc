@@ -169,3 +169,4 @@ function auto_activate_virtualenv() {
 PROMPT_COMMAND=auto_activate_virtualenv
 export PATH=$PATH:/home/sam/.local/bin
 eval "$(oh-my-posh init bash --config ~/dotfiles/.ohmyposhtheme.json)"
+export GITHUB_TOKEN=$(gh auth token)
