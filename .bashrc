@@ -153,7 +153,6 @@ function auto_activate_virtualenv() {
             fi
             if [ -d "$envdir" ]; then
                 source "$envdir/bin/activate"
-                uv pip sync "$(dirname "$python_version_file")/requirements-dev.txt"
             else
                 echo "Virtualenv directory '$envdir' does not exist."
             fi
@@ -170,3 +169,4 @@ PROMPT_COMMAND=auto_activate_virtualenv
 export PATH=$PATH:/home/sam/.local/bin
 eval "$(oh-my-posh init bash --config ~/dotfiles/.ohmyposhtheme.json)"
 export GITHUB_TOKEN=$(gh auth token)
+export AWS_PROFILE=management
