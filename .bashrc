@@ -164,6 +164,29 @@ function auto_activate_virtualenv() {
         fi
     fi
 }
+
+# Function to compile and sync requirements
+compile_requirements() {
+    # Compile the main requirements file.
+    pip compile --refresh requirements.in -o requirements.txt
+
+    # Check for a production requirements file.
+    if [[ -f requirements-prod.in ]]; then
+        pip compile --refresh requirements-prod.in -o requirements-prod.txt
+    fi
+
+    # Check for a development requirements file.
+    if [[ -f requirements-dev.in ]]; then
+        pip compile --refresh requirements-dev.in -o requirements-dev.txt
+        pip sync requirements-dev.txt
+    else
+        pip sync requirements.txt
+    fi
+}
+
+# Add an alias to run the function when needed
+alias compile="compile_requirements"
+
 # Set the PROMPT_COMMAND to auto-activate the virtualenv before each prompt
 PROMPT_COMMAND=auto_activate_virtualenv
 export PATH=$PATH:/home/sam/.local/bin
