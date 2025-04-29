@@ -13,3 +13,4 @@ ln -s ~/dotfiles/.bashrc ~/.bashrc
     sudo apt update &&
     sudo apt install gh -y
 oh-my-posh font install
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash

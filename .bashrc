@@ -187,9 +187,21 @@ compile_requirements() {
 # Add an alias to run the function when needed
 alias compile="compile_requirements"
 
+create_uv_venv() {
+    uv venv ".$1" --python 3.12
+    echo ".$1" >.python-version
+    source ".$1/bin/activate"
+    compile
+}
+alias uvvenv="create_uv_venv"
+
 # Set the PROMPT_COMMAND to auto-activate the virtualenv before each prompt
 PROMPT_COMMAND=auto_activate_virtualenv
 export PATH=$PATH:/home/sam/.local/bin
 eval "$(oh-my-posh init bash --config ~/dotfiles/.ohmyposhtheme.json)"
 export GITHUB_TOKEN=$(gh auth token)
 export AWS_PROFILE=management
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
