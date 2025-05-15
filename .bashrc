@@ -168,16 +168,16 @@ function auto_activate_virtualenv() {
 # Function to compile and sync requirements
 compile_requirements() {
     # Compile the main requirements file.
-    pip compile --refresh requirements.in -o requirements.txt
+    pip compile --refresh --upgrade requirements.in -o requirements.txt
 
     # Check for a production requirements file.
     if [[ -f requirements-prod.in ]]; then
-        pip compile --refresh requirements-prod.in -o requirements-prod.txt
+        pip compile --refresh --upgrade requirements-prod.in -o requirements-prod.txt
     fi
 
     # Check for a development requirements file.
     if [[ -f requirements-dev.in ]]; then
-        pip compile --refresh requirements-dev.in -o requirements-dev.txt
+        pip compile --refresh --upgrade requirements-dev.in -o requirements-dev.txt
         pip sync requirements-dev.txt
     else
         pip sync requirements.txt
