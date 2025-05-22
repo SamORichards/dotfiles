@@ -116,6 +116,7 @@ if ! shopt -oq posix; then
 fi
 
 PATH=$PATH:/home/sam/.local/bin
+. "$HOME/.local/bin/env"
 
 eval "$(uv generate-shell-completion bash)"
 alias pip='uv pip'
