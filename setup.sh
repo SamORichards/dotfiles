@@ -13,7 +13,7 @@ source ~/.bashrc
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null &&
     sudo apt update &&
     sudo apt install gh -y
-oh-my-posh font install
+oh-my-posh font install meslo
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 git config --global user.email "sammyrichards@me.com"
 git config --global user.name "Sam Richards"
