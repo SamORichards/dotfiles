@@ -4,6 +4,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 cd ..
 rm .bashrc
 ln -s ~/dotfiles/.bashrc ~/.bashrc
+source ~/.bashrc
 (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) &&
     sudo mkdir -p -m 755 /etc/apt/keyrings &&
     out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg &&
@@ -14,3 +15,5 @@ ln -s ~/dotfiles/.bashrc ~/.bashrc
     sudo apt install gh -y
 oh-my-posh font install
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+git config --global user.email "sammyrichards@me.com"
+git config --global user.name "Sam Richards"
