@@ -19,3 +19,4 @@ git config --global user.email "sammyrichards@me.com"
 git config --global user.name "Sam Richards"
 
 ./docker-setup.sh
+./aws-cli-setup.sh
