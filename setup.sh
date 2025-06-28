@@ -1,4 +1,4 @@
-sudo apt update && sudo apt install -y git curl unzip
+sudo apt update && sudo apt install -y git curl unzip make
 curl -s https://ohmyposh.dev/install.sh | bash -s
 curl -LsSf https://astral.sh/uv/install.sh | sh
 cd ..
