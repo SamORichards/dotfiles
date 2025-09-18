@@ -4,6 +4,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 cd ..
 rm .bashrc
 ln -s ~/dotfiles/.bashrc ~/.bashrc
+ln -s ~/dotfiles/.screenrc ~/.screenrc
 source ~/.bashrc
 cd ~/dotfiles
 (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) &&

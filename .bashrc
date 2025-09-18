@@ -116,7 +116,9 @@ if ! shopt -oq posix; then
 fi
 
 PATH=$PATH:/home/sam/.local/bin
-. "$HOME/.local/bin/env"
+if [ -f "$HOME/.local/bin/env" ]; then
+    . "$HOME/.local/bin/env"
+fi
 
 eval "$(uv generate-shell-completion bash)"
 alias pip='uv pip'
@@ -188,6 +190,16 @@ compile_requirements() {
 # Add an alias to run the function when needed
 alias compile="compile_requirements"
 
+
+uvsync () {
+    # Check for a development requirements file.
+    if [[ -f requirements-dev.in ]]; then
+        pip sync requirements-dev.txt
+    else
+        pip sync requirements.txt
+    fi
+}
+
 create_uv_venv() {
     uv venv ".$1" --python 3.12
     echo ".$1" >.python-version
@@ -198,7 +210,6 @@ alias uvvenv="create_uv_venv"
 
 # Set the PROMPT_COMMAND to auto-activate the virtualenv before each prompt
 PROMPT_COMMAND=auto_activate_virtualenv
-export PATH=$PATH:/home/sam/.local/bin
 eval "$(oh-my-posh init bash --config ~/dotfiles/.ohmyposhtheme.json)"
 export GITHUB_TOKEN=$(gh auth token)
 export AWS_PROFILE=management
@@ -206,3 +217,11 @@ export AWS_PROFILE=management
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+export PATH="$HOME/flutter/flutter/bin:$PATH"
+export PATH=$PATH:/home/sam/.local/bin
+export PROSPECT_PATH="/home/sam/Documents/Github/prospect-theory"
+
+# Load .env file if it exists
+if [ -f "$HOME/.env" ]; then
+    export $(grep -v '^#' "$HOME/.env" | xargs)
+fi
