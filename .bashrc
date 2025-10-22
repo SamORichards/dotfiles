@@ -201,7 +201,7 @@ uvsync () {
 }
 
 create_uv_venv() {
-    uv venv ".$1" --python 3.12
+    uv venv ".$1" --python 3.13
     echo ".$1" >.python-version
     source ".$1/bin/activate"
     compile
