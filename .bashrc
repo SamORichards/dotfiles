@@ -212,6 +212,7 @@ alias uvvenv="create_uv_venv"
 PROMPT_COMMAND=auto_activate_virtualenv
 eval "$(oh-my-posh init bash --config ~/dotfiles/.ohmyposhtheme.json)"
 export GITHUB_TOKEN=$(gh auth token)
+export PYX_AUTH_TOKEN=$(uv auth token pyx.dev)
 export AWS_PROFILE=management
 
 export NVM_DIR="$HOME/.nvm"
